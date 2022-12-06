@@ -12,8 +12,11 @@ public class Bookmark extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         Editor editor = e.getData(PlatformDataKeys.EDITOR);
         int position = editor.getCaretModel().getLogicalPosition().line;
-        //Messages.showMessageDialog(String.valueOf(position), "dhfjdhj", Messages.getQuestionIcon());
         String msg = Messages.showInputDialog("Input name of you bookmark", "Bookmark Name", Messages.getInformationIcon());
+        if (msg == null || msg.isEmpty()) {
+            return;
+        }
         BookmarkService.listOfBookmarksAndLines.put(msg, position);
+        BookmarkService.listOfFilesAndBookmarks.put(msg, e.getData(PlatformDataKeys.VIRTUAL_FILE));
     }
 }
